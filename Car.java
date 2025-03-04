@@ -4,7 +4,8 @@ public class Car {
     private int destination;
     private int currentLocation;
     private boolean direction;
-    private ArrayList<Person> passengers;
+    ArrayList <Person> passengers = new ArrayList <Person>(); 
+    public static final int MAX = 3;
 
     public Car(int myDestination, int start){
         destination = myDestination;
@@ -48,7 +49,7 @@ public class Car {
     public Person unload(){
         for(int i = 0; i < passengers.size(); i++){
             Person a = passengers.get(i);
-            if(a.getDestination() == currentLocation){
+            if(a.getDestination() == currentLocation || destination == currentLocation){
                 return passengers.remove(i);
             }
         }
@@ -58,5 +59,18 @@ public class Car {
     public boolean hasRoom(){
         return passengers.size() < 3;
     }
-}
 
+    public int getDes()
+    {
+        return destination;
+    }
+
+    public int getPassengers()
+    {
+        return passengers.size(); 
+    }
+
+    public int getLocation(){
+        return currentLocation;
+    }
+}
