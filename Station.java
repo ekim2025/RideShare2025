@@ -46,7 +46,10 @@ public class Station{
     public ArrayList<Person> getRightPeople() {
         return waitingRight;
     }
-
+    
+    public int getArrivedPassengers() {
+        return completed.size();
+    }
 
     public String toString(){
         String s = "station: " + number + "\n";
@@ -55,4 +58,5 @@ public class Station{
         s+= "Completed: " + completed.toString();
         return s;
     }
+ 
 }

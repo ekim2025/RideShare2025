@@ -1,3 +1,4 @@
+
 import java.util.*;
 public class Road{
     private Station [] stations;
@@ -18,7 +19,6 @@ public class Road{
             int start = (int)(Math.random() * NUMSTATIONS);
             int stop = (int)(Math.random() * NUMSTATIONS);
             stations[start].addPerson(new Person(stop, start));
-
         }
     }
 
@@ -27,7 +27,6 @@ public class Road{
             int start = (int)(Math.random() * NUMSTATIONS);
             int stop = (int)(Math.random() * NUMSTATIONS);
             fleet.add(new Car(stop, start));
-
         }
     }
 
@@ -38,18 +37,16 @@ public class Road{
             if(p != null){
                 int location = c.getLocation();
                 stations[location].addPerson(p);
-            } else {
-                break;
             }
-            
+            // Remove the break statement that was here
         }
+        
         // load all eligible people from stations to cars
-
         for (Station s : stations){
             ArrayList<Person> leftPeople = s.getLeftPeople();
             ArrayList<Person> rightPeople = s.getRightPeople();
 
-            ArrayList<Person> toRemoveLeft = new ArrayList<>();  // for the people who get into a car but aren't at their destination ?? Not sure aboutt his but also not sure where else to store them
+            ArrayList<Person> toRemoveLeft = new ArrayList<>();
             ArrayList<Person> toRemoveRight = new ArrayList<>();
 
             //load leftbound ppl into leftbound cars
@@ -63,26 +60,67 @@ public class Road{
                     }
                 }
             }
-            //load rightbounf ppl into rightbound cars
+            
+            //load rightbound ppl into rightbound cars
             for(int i = 0; i < rightPeople.size(); i++) {
                 Person p = rightPeople.get(i);
                 for (Car c : fleet) {
                     if(c.hasRoom() && p.getDirection() && c.isGoingSameDirection(p)) {
+                        c.load(p);  // Add this line to actually load the person
                         toRemoveRight.add(p);
-                        break; // moves onto the next person!
+                        break;
                     }
                 }
             }
-
-        // going to be similar, but noe looping through stations and putting in cars 
-        // think about car having room and the direction of the car vs. person
-
+            
+            // Remove people who got into cars
+            leftPeople.removeAll(toRemoveLeft);
+            rightPeople.removeAll(toRemoveRight);
+        }
 
         // move all cars
         for(Car c : fleet){
             c.move();
         }
-
     }
-}
+    
+    public int getCompletedPassengers() {
+        int completed = 0;
+        
+        // check all stations for passengers who have arrived at their destination
+        for(int i = 0; i < stations.length; i++){
+            Station station = stations[i];
+            completed += station.completedCount();  // Using your existing method
+        }
+        
+        // also check cars for passengers who have reached their destination but haven't exited yet
+        for(Car c : fleet){
+            completed += c.getCompletedPassengers();
+        }
+        
+        return completed;
+    }
+
+
+    public String toString() {
+        String result = "";
+        
+        // Loop through all stations
+        for (int i = 0; i < stations.length; i++) {
+            result += "Station " + i + ": " + stations[i].toString() + "\n";
+        }
+        
+        result += "\nCARS:\n";
+        // Loop through all cars
+        for (int i = 0; i < fleet.size(); i++) {
+            Car car = fleet.get(i);
+            result += "Car " + i + 
+                     " | Location: " + car.getLocation() + 
+                     " | Destination: " + car.getDes() + 
+                     " | Direction: " + (car.isGoingRight() ? "Right" : "Left") +
+                     " | Passengers: " + car.getPassengers() + "\n";
+        }
+        
+        return result;
+    }
 }

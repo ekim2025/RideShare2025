@@ -87,5 +87,22 @@ public boolean isGoingSameDirection(Person p) {
     return direction == p.getDirection();
 }
 
-    
+public boolean isGoingRight() {
+    return direction; 
 }
+public int getCompletedPassengers() {
+    int completedCount = 0;
+    
+    // check all passengers in this car
+    for (int i = 0; i < passengers.size(); i++) {
+        Person passenger = passengers.get(i);
+        // if passenger's destination matches car's current location
+        if (passenger.getDestination() == currentLocation) {
+            completedCount++;
+        }
+    }
+    
+    return completedCount;
+}
+}
+    
