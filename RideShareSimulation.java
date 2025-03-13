@@ -20,8 +20,37 @@ public class RideShareSimulation {
         System.out.println("Creating cars...");
         road.populateCars(numCars);
         
-        System.out.println("Running simulation...");
+        System.out.println("\nRunning simulation...");
         int maxSteps = 100;
         
         int previousCompleted = 0;
         int stepsWithoutChange = 0;
+        for (int step = 1; step <= maxSteps; step++) {
+            road.move();
+            
+            int estimated = estimateCompleted(step, numPassengers);
+            
+            if (estimated == previousCompleted) {
+                stepsWithoutChange++;
+                if (stepsWithoutChange > 10) {
+                    System.out.println("Simulation stopped");
+                    break;
+                }
+            } else {
+                stepsWithoutChange = 0;
+            }
+            previousCompleted = estimated;
+            
+            if (step % 10 == 0) {
+                System.out.println("Step " + step + ": About " + estimated + " done");
+            }
+            
+            if (estimated >= numPassengers) {
+                System.out.println("All done!");
+                break;
+            }
+        }
+        
+        calculateResults(numCars, numPassengers, maxSteps);
+    }
+    
