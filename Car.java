@@ -55,7 +55,14 @@ public class Car {
         }
         return null;
     }
-
+    
+    public void load(Person p) {
+        if (hasRoom()) {
+            passengers.add(p); // Add the person to the list of passengers
+        } else {
+            System.out.println("ERROR: Car is full!");
+        }
+    }
 
 
     public boolean hasRoom(){
@@ -75,4 +82,10 @@ public class Car {
     public int getLocation(){
         return currentLocation;
     }
+
+public boolean isGoingSameDirection(Person p) {
+    return direction == p.getDirection();
+}
+
+    
 }

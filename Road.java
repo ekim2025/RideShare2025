@@ -3,7 +3,7 @@ public class Road{
     private Station [] stations;
     private ArrayList<Car> fleet;
     
-    private static final int NUMSTATIONS = 10;
+    private static final int NUMSTATIONS = 32;
 
     public Road(){
         stations = new Station[NUMSTATIONS];
@@ -46,10 +46,33 @@ public class Road{
         // load all eligible people from stations to cars
 
         for (Station s : stations){
-            for(Car c: fleet){
-                if(c.)
+            ArrayList<Person> leftPeople = s.getLeftPeople();
+            ArrayList<Person> rightPeople = s.getRightPeople();
+
+            ArrayList<Person> toRemoveLeft = new ArrayList<>();  // for the people who get into a car but aren't at their destination ?? Not sure aboutt his but also not sure where else to store them
+            ArrayList<Person> toRemoveRight = new ArrayList<>();
+
+            //load leftbound ppl into leftbound cars
+            for(int i = 0; i < leftPeople.size(); i++) {
+                Person p = leftPeople.get(i);
+                for(Car c : fleet) {
+                    if(c.hasRoom() && !p.getDirection() && c.isGoingSameDirection(p)){
+                        c.load(p);
+                        toRemoveLeft.add(p);
+                        break;
+                    }
+                }
             }
-        }
+            //load rightbounf ppl into rightbound cars
+            for(int i = 0; i < rightPeople.size(); i++) {
+                Person p = rightPeople.get(i);
+                for (Car c : fleet) {
+                    if(c.hasRoom() && p.getDirection() && c.isGoingSameDirection(p)) {
+                        toRemoveRight.add(p);
+                        break; // moves onto the next person!
+                    }
+                }
+            }
 
         // going to be similar, but noe looping through stations and putting in cars 
         // think about car having room and the direction of the car vs. person
@@ -61,3 +84,5 @@ public class Road{
         }
 
     }
+}
+}
