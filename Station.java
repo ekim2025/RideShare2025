@@ -39,6 +39,14 @@ public class Station{
         return completed.size();
     }
 
+    public ArrayList<Person> getLeftPeople() {
+        return waitingLeft;
+    }
+
+    public ArrayList<Person> getRightPeople() {
+        return waitingRight;
+    }
+
 
     public String toString(){
         String s = "station: " + number + "\n";

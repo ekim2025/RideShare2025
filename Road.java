@@ -43,10 +43,16 @@ public class Road{
             }
             
         }
-    }
+        // load all eligible people from stations to cars
 
-        //load all eligible people from stations to cars
-        //going to be similar, but noe looping through stations and putting in cars
+        for (Station s : stations){
+            for(Car c: fleet){
+                if(c.)
+            }
+        }
+
+        // going to be similar, but noe looping through stations and putting in cars 
+        // think about car having room and the direction of the car vs. person
 
 
         // move all cars
