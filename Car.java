@@ -104,5 +104,6 @@ public int getCompletedPassengers() {
     
     return completedCount;
 }
+
 }
     

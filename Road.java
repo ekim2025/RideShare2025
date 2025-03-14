@@ -74,8 +74,8 @@ public class Road{
             }
             
             // Remove people who got into cars
-            leftPeople.removeAll(toRemoveLeft);
-            rightPeople.removeAll(toRemoveRight);
+            leftPeople.removeAll(toRemoveLeft); // looking back this sort of overcomplicated the whole thing but I thought it needed to have an option to get only the completed passengers and this was the only way I could think of.
+            rightPeople.removeAll(toRemoveRight);// romove all was a method I looked up " The removeAll() method removes all items from a list which belong to a specified collection."
         }
 
         // move all cars
@@ -117,7 +117,6 @@ public class Road{
             result += "Car " + i + 
                      " | Location: " + car.getLocation() + 
                      " | Destination: " + car.getDes() + 
-                     " | Direction: " + (car.isGoingRight() ? "Right" : "Left") +
                      " | Passengers: " + car.getPassengers() + "\n";
         }
         
